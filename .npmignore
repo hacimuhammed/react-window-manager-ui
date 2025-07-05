@@ -1,0 +1,36 @@
+# Source files
+src/
+public/
+
+# Config files
+vite.config.ts
+tsconfig*.json
+tailwind.config.js
+postcss.config.js
+components.json
+eslint.config.js
+
+# Development files
+.vscode/
+.idea/
+*.log
+*.tgz
+
+# Git and CI
+.git/
+.github/
+.gitignore
+
+# Dependencies
+node_modules/
+
+# Temporary files
+.tmp/
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development build
+index.html 
