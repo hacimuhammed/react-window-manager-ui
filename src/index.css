@@ -1,140 +1,404 @@
-@import "tailwindcss";
+/* React Window Manager UI - Headless CSS */
 
-@plugin 'tailwindcss-animate';
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+/* Reset and base styles */
+.react-window-manager {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  color: #1a1a1a;
 }
 
-:root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 10% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
-  --muted: hsl(240 4.8% 95.9%);
-  --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(240 4.8% 95.9%);
-  --accent-foreground: hsl(240 5.9% 10%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
-  --ring: hsl(240 10% 3.9%);
-  --chart-1: hsl(12 76% 61%);
-  --chart-2: hsl(173 58% 39%);
-  --chart-3: hsl(197 37% 24%);
-  --chart-4: hsl(43 74% 66%);
-  --chart-5: hsl(27 87% 67%);
-  --radius: 0.6rem;
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+.react-window-manager *,
+.react-window-manager *::before,
+.react-window-manager *::after {
+  box-sizing: inherit;
 }
 
-.dark {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(240 4.9% 83.9%);
-  --chart-1: hsl(220 70% 50%);
-  --chart-2: hsl(160 60% 45%);
-  --chart-3: hsl(30 80% 55%);
-  --chart-4: hsl(280 65% 60%);
-  --chart-5: hsl(340 75% 55%);
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+/* Window container */
+.react-window-manager.window {
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
+.react-window-manager.window.active {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+.react-window-manager.window.fullscreen {
+  border-radius: 0;
+}
+
+/* Window header */
+.react-window-manager .header {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+  background-color: #f8f9fa;
+  color: #1a1a1a;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.react-window-manager .header .toolbar {
+  display: flex;
+  align-items: center;
+}
+
+.react-window-manager .header .title {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.react-window-manager .header .controls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* Window content */
+.react-window-manager .content {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+}
+
+/* Buttons */
+.react-window-manager .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  outline: none;
+  text-decoration: none;
+}
+
+.react-window-manager .button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.react-window-manager .button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Button variants */
+.react-window-manager .button.default {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.react-window-manager .button.default:hover {
+  background-color: rgba(26, 26, 26, 0.9);
+}
+
+.react-window-manager .button.ghost {
+  background-color: transparent;
+  color: inherit;
+}
+
+.react-window-manager .button.ghost:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.react-window-manager .button.ghost.destructive:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* Button sizes */
+.react-window-manager .button.size-default {
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.react-window-manager .button.size-sm {
+  height: 2.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.react-window-manager .button.size-lg {
+  height: 2.75rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.375rem;
+}
+
+.react-window-manager .button.size-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+/* Header button specific styles */
+.react-window-manager .header .button.size-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0.25rem;
+  border-radius: 9999px;
+}
+
+.react-window-manager .header .button.size-icon:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.react-window-manager .header .button.size-icon.destructive:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* Resize handles */
+.react-window-manager .resize-handle {
+  position: absolute;
+  z-index: 10;
+}
+
+.react-window-manager .resize-handle.se {
+  bottom: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: se-resize;
+}
+
+.react-window-manager .resize-handle.sw {
+  bottom: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: sw-resize;
+}
+
+.react-window-manager .resize-handle.ne {
+  top: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: ne-resize;
+}
+
+.react-window-manager .resize-handle.nw {
+  top: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: nw-resize;
+}
+
+.react-window-manager .resize-handle.n {
+  top: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 0.5rem;
+  cursor: n-resize;
+}
+
+.react-window-manager .resize-handle.s {
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 0.5rem;
+  cursor: s-resize;
+}
+
+.react-window-manager .resize-handle.e {
+  top: 1rem;
+  bottom: 1rem;
+  right: 0;
+  width: 0.5rem;
+  cursor: e-resize;
+}
+
+.react-window-manager .resize-handle.w {
+  top: 1rem;
+  bottom: 1rem;
+  left: 0;
+  width: 0.5rem;
+  cursor: w-resize;
+}
+
+/* Animations */
+@keyframes react-window-manager-fade-in {
+  from {
+    opacity: 0;
   }
-  body {
-    @apply bg-background text-foreground;
+  to {
+    opacity: 1;
   }
 }
 
-/* Grid background pattern */
-.bg-grid-white {
-  background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 14px 14px;
+@keyframes react-window-manager-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes react-window-manager-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes react-window-manager-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes react-window-manager-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes react-window-manager-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Utility classes */
+.react-window-manager .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.react-window-manager .truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.react-window-manager .flex {
+  display: flex;
+}
+
+.react-window-manager .flex-1 {
+  flex: 1;
+}
+
+.react-window-manager .items-center {
+  align-items: center;
+}
+
+.react-window-manager .justify-center {
+  justify-content: center;
+}
+
+.react-window-manager .justify-between {
+  justify-content: space-between;
+}
+
+.react-window-manager .gap-1 {
+  gap: 0.25rem;
+}
+
+.react-window-manager .text-center {
+  text-align: center;
+}
+
+.react-window-manager .font-medium {
+  font-weight: 500;
+}
+
+.react-window-manager .select-none {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.react-window-manager .cursor-move {
+  cursor: move;
+}
+
+.react-window-manager .overflow-hidden {
+  overflow: hidden;
+}
+
+.react-window-manager .overflow-auto {
+  overflow: auto;
+}
+
+.react-window-manager .rounded-full {
+  border-radius: 9999px;
+}
+
+.react-window-manager .p-0 {
+  padding: 0;
+}
+
+.react-window-manager .p-1 {
+  padding: 0.25rem;
+}
+
+.react-window-manager .p-2 {
+  padding: 0.5rem;
+}
+
+.react-window-manager .mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.react-window-manager .h-6 {
+  height: 1.5rem;
+}
+
+.react-window-manager .w-6 {
+  width: 1.5rem;
 }

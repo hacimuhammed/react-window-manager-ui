@@ -923,13 +923,11 @@ export const Window = ({
         transformOrigin: "top center",
         zIndex,
       }}
-      className={`${
-        isFullscreen ? "" : "rounded-lg"
-      } overflow-hidden flex flex-col border-none ${
-        activeWindowId === id
-          ? "shadow-[0_5px_30px_rgba(0,0,0,0.8)]"
-          : "shadow-sm"
-      } bg-card text-card-foreground ${className}`}
+      className={`react-window-manager window ${
+        isFullscreen ? "fullscreen" : ""
+      } ${
+        activeWindowId === id ? "active" : ""
+      } ${className}`}
       onMouseDown={handleWindowActivation}
       data-window-id={id}
     >
@@ -939,13 +937,13 @@ export const Window = ({
         onMouseDown={handleDragStart}
         onTouchStart={handleTouchStart}
         onDoubleClick={handleHeaderDoubleClick}
-        className="p-2 flex items-center justify-between cursor-move bg-muted text-card-foreground select-none"
+        className="react-window-manager header"
       >
-        <div className="flex items-center">{toolbar}</div>
-        <div className="mx-2 flex-1 text-center truncate font-medium">
+        <div className="react-window-manager toolbar">{toolbar}</div>
+        <div className="react-window-manager title">
           {typeof title === "string" ? title : title}
         </div>
-        <div className="flex gap-1">
+        <div className="react-window-manager controls">
           {allowFullscreen && (
             <Button
               onClick={(e) => {
@@ -956,7 +954,6 @@ export const Window = ({
               onMouseDown={(e) => e.stopPropagation()}
               size="icon"
               variant="ghost"
-              className="h-6 w-6 p-1 rounded-full hover:bg-muted-foreground/20"
             >
               {isFullscreen
                 ? icons?.fullscreenExit || defaultRestoreIcon
@@ -968,7 +965,7 @@ export const Window = ({
             onMouseDown={(e) => e.stopPropagation()}
             size="icon"
             variant="ghost"
-            className="h-6 w-6 p-1 rounded-full hover:bg-destructive hover:text-destructive-foreground"
+            className="destructive"
           >
             {icons?.close || defaultCloseIcon}
           </Button>
@@ -976,7 +973,7 @@ export const Window = ({
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-0 window-content">{children}</div>
+      <div className="react-window-manager content">{children}</div>
 
       {/* Resizers - Show the handles based on the resize prop */}
       {!isFullscreen && resizeHandles.length > 0 && (
@@ -985,25 +982,25 @@ export const Window = ({
           {resizeHandles.includes("se") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-10"
+              className="react-window-manager resize-handle se"
             />
           )}
           {resizeHandles.includes("sw") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-10"
+              className="react-window-manager resize-handle sw"
             />
           )}
           {resizeHandles.includes("ne") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-10"
+              className="react-window-manager resize-handle ne"
             />
           )}
           {resizeHandles.includes("nw") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-10"
+              className="react-window-manager resize-handle nw"
             />
           )}
 
@@ -1011,25 +1008,25 @@ export const Window = ({
           {resizeHandles.includes("n") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute top-0 left-4 right-4 h-2 cursor-n-resize z-10"
+              className="react-window-manager resize-handle n"
             />
           )}
           {resizeHandles.includes("s") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute bottom-0 left-4 right-4 h-2 cursor-s-resize z-10"
+              className="react-window-manager resize-handle s"
             />
           )}
           {resizeHandles.includes("e") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute top-4 bottom-4 right-0 w-2 cursor-e-resize z-10"
+              className="react-window-manager resize-handle e"
             />
           )}
           {resizeHandles.includes("w") && (
             <div
               onMouseDown={handleResizeStart}
-              className="absolute top-4 bottom-4 left-0 w-2 cursor-w-resize z-10"
+              className="react-window-manager resize-handle w"
             />
           )}
         </>

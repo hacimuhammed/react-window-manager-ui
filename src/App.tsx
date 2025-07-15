@@ -16,7 +16,7 @@ const WindowManager = () => {
           title={win.title}
           position={win.position}
           size={win.size}
-          animation="scale"
+          animation="jellyfish"
           resize={win.data?.resize}
           minSize={win.data?.minSize}
           maxSize={win.data?.maxSize}

@@ -1,11 +1,9 @@
-import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
 import react from "@vitejs/plugin-react";
-import { resolve } from "path";
-import postcss from "postcss";
 import autoprefixer from "autoprefixer";
-import tailwindcss from "@tailwindcss/postcss";
+import { resolve } from "path";
+import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import dts from "vite-plugin-dts";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -26,10 +24,7 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      plugins: [
-        tailwindcss(),
-        autoprefixer(),
-      ],
+      plugins: [autoprefixer()],
     },
   },
   build: {
