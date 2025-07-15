@@ -105,6 +105,15 @@ export const Window = ({
     size: size,
   });
 
+  useEffect(() => {
+    if (onResize) {
+      onResize({
+        width: windowSize.width,
+        height: windowSize.height,
+      });
+    }
+  }, [windowSize]);
+
   // Drag state refs
   const isDragging = useRef(false);
   const isResizing = useRef(false);
@@ -527,13 +536,6 @@ export const Window = ({
       initialX: windowPosition.x,
       initialY: windowPosition.y,
     };
-
-    if (onResize) {
-      onResize({
-        width: windowSize.width,
-        height: windowSize.height,
-      });
-    }
 
     // Activate the window and bring it to front
     setActiveWindow(id);
