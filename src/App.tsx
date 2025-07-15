@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "./components/ui/button";
 import { Window } from "./index";
 import { useWindowManagerStore } from "./stores/windowManagerStore";
+import "./App.css";
 
 const WindowManager = () => {
   const { windows } = useWindowManagerStore();
@@ -117,43 +118,41 @@ const TaskManagerContent = () => {
   ).length;
 
   return (
-    <div className="h-full bg-white">
+    <div className="task-manager-content">
       {/* Header */}
-      <div className="p-4 border-b bg-gray-50">
-        <h2 className="text-xl font-bold text-gray-800">
-          Task Manager Dashboard
-        </h2>
-        <p className="text-sm text-gray-600">
+      <div className="task-manager-header">
+        <h2 className="task-manager-title">Task Manager Dashboard</h2>
+        <p className="task-manager-subtitle">
           Manage your daily tasks efficiently
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="p-4 grid grid-cols-3 gap-3">
-        <div className="bg-blue-50 p-3 rounded-lg text-center">
-          <div className="text-2xl font-bold text-blue-600">
+      <div className="stats-grid">
+        <div className="stat-card stat-card-active">
+          <div className="stat-number stat-number-active">
             {activeTasksCount}
           </div>
-          <div className="text-xs text-blue-800">Active Tasks</div>
+          <div className="stat-label stat-label-active">Active Tasks</div>
         </div>
-        <div className="bg-green-50 p-3 rounded-lg text-center">
-          <div className="text-2xl font-bold text-green-600">
+        <div className="stat-card stat-card-completed">
+          <div className="stat-number stat-number-completed">
             {completedTasksCount}
           </div>
-          <div className="text-xs text-green-800">Completed</div>
+          <div className="stat-label stat-label-completed">Completed</div>
         </div>
-        <div className="bg-purple-50 p-3 rounded-lg text-center">
-          <div className="text-2xl font-bold text-purple-600">
+        <div className="stat-card stat-card-progress">
+          <div className="stat-number stat-number-progress">
             {progressTasksCount}
           </div>
-          <div className="text-xs text-purple-800">In Progress</div>
+          <div className="stat-label stat-label-progress">In Progress</div>
         </div>
       </div>
 
       {/* Task List */}
-      <div className="p-4 flex-1 overflow-auto">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="font-semibold text-gray-800">Today's Tasks</h3>
+      <div className="task-list-container">
+        <div className="task-list-header">
+          <h3 className="task-list-title">Today's Tasks</h3>
           <Button
             size="sm"
             variant="outline"
@@ -165,16 +164,16 @@ const TaskManagerContent = () => {
 
         {/* Add Task Form */}
         {showAddForm && (
-          <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+          <div className="add-task-form">
             <input
               type="text"
               value={newTaskText}
               onChange={(e) => setNewTaskText(e.target.value)}
               placeholder="Enter new task..."
-              className="w-full p-2 border rounded mb-2"
+              className="task-input"
               onKeyPress={(e) => e.key === "Enter" && addTask()}
             />
-            <div className="flex gap-2">
+            <div className="form-actions">
               <Button size="sm" onClick={addTask}>
                 Add
               </Button>
@@ -189,34 +188,29 @@ const TaskManagerContent = () => {
           </div>
         )}
 
-        <div className="space-y-2">
+        <div>
           {tasks.map((task) => (
-            <div
-              key={task.id}
-              className="flex items-center gap-3 p-2 bg-gray-50 rounded"
-            >
+            <div key={task.id} className="task-item">
               <input
                 type="checkbox"
                 checked={task.status === "completed"}
                 onChange={() => toggleTask(task.id)}
-                className="w-4 h-4"
+                className="task-checkbox"
               />
               <span
-                className={`flex-1 text-sm ${
-                  task.status === "completed"
-                    ? "line-through text-gray-500"
-                    : "text-gray-800"
+                className={`task-text ${
+                  task.status === "completed" ? "task-text-completed" : ""
                 }`}
               >
                 {task.text}
               </span>
               <span
-                className={`text-xs px-2 py-1 rounded ${
+                className={`task-priority ${
                   task.priority === "high"
-                    ? "bg-red-100 text-red-800"
+                    ? "priority-high"
                     : task.priority === "medium"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-blue-100 text-blue-800"
+                    ? "priority-medium"
+                    : "priority-low"
                 }`}
               >
                 {task.priority}
@@ -225,7 +219,7 @@ const TaskManagerContent = () => {
                 size="sm"
                 variant="outline"
                 onClick={() => deleteTask(task.id)}
-                className="text-red-600 hover:bg-red-50"
+                className="delete-button"
               >
                 ×
               </Button>
@@ -235,12 +229,12 @@ const TaskManagerContent = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="p-4 border-t bg-gray-50">
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-600">
+      <div className="task-manager-footer">
+        <div className="footer-content">
+          <div className="footer-text">
             Last updated: {new Date().toLocaleTimeString()}
           </div>
-          <div className="flex gap-2">
+          <div className="footer-actions">
             <Button size="sm" variant="outline">
               Settings
             </Button>
@@ -273,10 +267,8 @@ function App() {
       zIndex: 1,
       data: {
         toolbar: (
-          <div className="flex items-center gap-2">
-            <span className="text-xs bg-green-100 px-2 py-1 rounded">
-              Live Demo
-            </span>
+          <div className="toolbar-item">
+            <span className="toolbar-badge">Live Demo</span>
           </div>
         ),
         component: <TaskManagerContent />,
@@ -303,7 +295,7 @@ function App() {
         zIndex: 1,
         data: {
           toolbar: (
-            <div className="flex items-center gap-2">
+            <div className="toolbar-item">
               <Button
                 variant="outline"
                 size="sm"
@@ -318,7 +310,9 @@ function App() {
                     isMaximized: false,
                     zIndex: 1,
                     data: {
-                      component: <div className="p-4">New Demo App Window</div>,
+                      component: (
+                        <div className="padded-div">New Demo App Window</div>
+                      ),
                       resize: true,
                       minSize: { width: 400, height: 300 },
                     },
@@ -330,63 +324,51 @@ function App() {
             </div>
           ),
           component: (
-            <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 h-full overflow-auto">
-              <div className="max-w-full">
-                <h1 className="text-2xl font-bold mb-6 text-gray-800">
+            <div className="resize-guide-content">
+              <div>
+                <h1 className="resize-guide-title">
                   🚀 React Window Manager - Resize Features
                 </h1>
 
-                <div className="grid gap-4 mb-6">
-                  <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-blue-500">
-                    <h3 className="font-semibold text-lg mb-2">
-                      📏 Resize Modes
-                    </h3>
-                    <ul className="text-sm space-y-1 text-gray-700">
+                <div className="guide-section-grid">
+                  <div className="guide-card guide-card-blue">
+                    <h3 className="guide-card-title">📏 Resize Modes</h3>
+                    <ul className="guide-list">
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
-                          resize={true}
-                        </code>{" "}
-                        - All direction resize
+                        <code className="code-snippet">resize={true}</code> - All
+                        direction resize
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
+                        <code className="code-snippet">
                           resize="horizontal"
                         </code>{" "}
                         - Horizontal only
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
-                          resize="vertical"
-                        </code>{" "}
-                        - Vertical only
+                        <code className="code-snippet">resize="vertical"</code> - Vertical
+                        only
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
-                          resize="top"
-                        </code>{" "}
-                        - Top edge only
+                        <code className="code-snippet">resize="top"</code> - Top edge
+                        only
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
-                          resize={false}
-                        </code>{" "}
-                        - Resize disabled
+                        <code className="code-snippet">resize={false}</code> - Resize
+                        disabled
                       </li>
                     </ul>
                   </div>
 
-                  <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500">
-                    <h3 className="font-semibold text-lg mb-2">
-                      📐 Size Constraints
-                    </h3>
-                    <ul className="text-sm space-y-1 text-gray-700">
+                  <div className="guide-card guide-card-green">
+                    <h3 className="guide-card-title">📐 Size Constraints</h3>
+                    <ul className="guide-list">
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
+                        <code className="code-snippet">
                           minSize={`{width: 200, height: 150}`}
                         </code>
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-2 py-1 rounded">
+                        <code className="code-snippet">
                           maxSize={`{width: 1000, height: 800}`}
                         </code>
                       </li>
@@ -394,33 +376,30 @@ function App() {
                     </ul>
                   </div>
 
-                  <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-purple-500">
-                    <h3 className="font-semibold text-lg mb-2">
+                  <div className="guide-card guide-card-purple">
+                    <h3 className="guide-card-title">
                       🎮 Interactive Features
                     </h3>
-                    <ul className="text-sm space-y-1 text-gray-700">
-                      <li>✅ Corner and edge resize handles</li>
-                      <li>✅ Window dragging</li>
-                      <li>✅ Fullscreen toggle (double-click header)</li>
-                      <li>✅ Smooth animations</li>
+                    <ul className="guide-list">
+                      <li>
+                        <code className="code-snippet">allowFullscreen</code>:
+                        Double-click header to toggle.
+                      </li>
+                      <li>
+                        <code className="code-snippet">
+                          animation="jellyfish"
+                        </code>
+                        : Fun window animation.
+                      </li>
                     </ul>
-                  </div>
-
-                  <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-orange-500">
-                    <h3 className="font-semibold text-lg mb-2">
-                      🔧 Try It Out!
-                    </h3>
-                    <p className="text-sm text-gray-700 mb-3">
-                      Try resizing this window. You'll see different cursors on
-                      corners and edges.
-                    </p>
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <p className="text-sm text-yellow-800">
-                    💡 <strong>Tip:</strong> Double-click the header to toggle
-                    fullscreen mode!
+                <div className="footer-text" style={{ textAlign: "center" }}>
+                  <p>
+                    This is a demo of the windowing system's capabilities.
+                    <br />
+                    Try resizing, moving, and creating new windows!
                   </p>
                 </div>
               </div>
@@ -435,25 +414,18 @@ function App() {
   }, [addWindow]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 p-8">
-      <WindowManager />
-
-      {/* Desktop Shortcut - Windows 11 Style */}
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-        <div className="pointer-events-auto">
-          <button
-            onClick={openTaskManager}
-            className="group flex flex-col items-center p-4 rounded-lg hover:bg-white/20 transition-all duration-200 hover:scale-105"
-          >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-300 to-purple-400 rounded-lg flex items-center justify-center text-white text-2xl shadow-lg group-hover:shadow-xl transition-shadow">
-              📱
-            </div>
-            <span className="mt-2 text-sm font-medium text-gray-700 group-hover:text-gray-900">
-              Task Manager
-            </span>
-          </button>
-        </div>
+    <div className="app-container">
+      {/* Top Toolbar */}
+      <div className="toolbar">
+        <Button size="sm" onClick={openTaskManager}>
+          Open Task Manager
+        </Button>
       </div>
+
+      {/* Main Content Area */}
+      <main className="main-content">
+        <WindowManager />
+      </main>
     </div>
   );
 }
