@@ -3,6 +3,7 @@ import {
   type WindowAnimationType,
   useWindowManagerStore,
 } from "./stores/windowManagerStore";
+import "./index.css";
 
 import { Button } from "./components/ui/button";
 import { ExitIconSVG } from "./components/icons/exit";
