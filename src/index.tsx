@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./index.css";
 import {
   type WindowAnimationType,
   useWindowManagerStore,
 } from "./stores/windowManagerStore";
-import "./index.css";
 
-import { Button } from "./components/ui/button";
 import { ExitIconSVG } from "./components/icons/exit";
 import { FullScreenIconSVG } from "./components/icons/full-screen";
 import { FullScreenExitIconSVG } from "./components/icons/full-screen-exit";
+import { Button } from "./components/ui/button";
 
 /**
  * Props for the Window component
@@ -56,6 +56,8 @@ export type WindowProps = {
   onClose?: () => void;
   /** Callback when fullscreen state changes */
   onToggleFullscreen?: (isFullscreen: boolean) => void;
+  /** Callback when window is resized */
+  onResize?: (size: { width: number; height: number }) => void;
 };
 
 export const Window = ({
@@ -74,6 +76,7 @@ export const Window = ({
   allowFullscreen = true,
   onClose,
   onToggleFullscreen,
+  onResize,
 }: WindowProps) => {
   const {
     updateWindow,
@@ -525,6 +528,13 @@ export const Window = ({
       initialY: windowPosition.y,
     };
 
+    if (onResize) {
+      onResize({
+        width: windowSize.width,
+        height: windowSize.height,
+      });
+    }
+
     // Activate the window and bring it to front
     setActiveWindow(id);
     bringToFront(id);
@@ -925,9 +935,7 @@ export const Window = ({
       }}
       className={`react-window-manager window ${
         isFullscreen ? "fullscreen" : ""
-      } ${
-        activeWindowId === id ? "active" : ""
-      } ${className}`}
+      } ${activeWindowId === id ? "active" : ""} ${className}`}
       onMouseDown={handleWindowActivation}
       data-window-id={id}
     >
@@ -1038,9 +1046,9 @@ export const Window = ({
 // Export store and types
 export {
   useWindowManagerStore,
-  type WindowAnimationType,
-  type ContextMenuItem,
   type ContextMenuInfo,
+  type ContextMenuItem,
+  type WindowAnimationType,
 } from "./stores/windowManagerStore";
 
 // Export types

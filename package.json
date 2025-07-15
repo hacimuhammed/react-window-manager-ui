@@ -1,7 +1,7 @@
 {
   "name": "react-window-manager-ui",
   "private": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A lightweight React component library for creating draggable, resizable windows with TypeScript support",
   "type": "module",
   "module": "./dist/index.mjs",
