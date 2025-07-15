@@ -15,6 +15,8 @@ export default defineConfig({
       include: ["src/**/*"],
       exclude: ["src/**/*.test.*", "src/**/*.spec.*"],
       entryRoot: "src",
+      tsconfigPath: "./tsconfig.lib.json",
+      rollupTypes: true,
     }),
   ],
   resolve: {
